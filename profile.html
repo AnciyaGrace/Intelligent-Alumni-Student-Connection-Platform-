@@ -95,36 +95,19 @@
     socialLinksDiv.appendChild(twitterLink);
   }
 </script>
-<script src= "firebase.js"></script>
-<script>saveProfile(profileData) {
-    db.collection("profiles").add(profileData)
-      .then((docRef) => {
-        console.log("Profile added with ID:", docRef.id);
-        alert("Profile saved successfully!");
-      })
-      .catch((error) => {
-        console.error("Error adding profile:", error);
-      });
-  }
-  // Function to retrieve and display profiles
-function getProfiles() {
-  db.collection("profiles").get()
-    .then((querySnapshot) => {
-      querySnapshot.forEach((doc) => {
-        const profile = doc.data();
-        console.log("Profile:", profile);
-        
-        // Display profiles on the page
-        displayProfile(profile); // You’ll implement this function to add profiles to your HTML
-      });
-    })
-    .catch((error) => {
-      console.error("Error retrieving profiles:", error);
-    });
-}
-
-// Call getProfiles to retrieve profiles when the page loads
-// getProfiles();
-</script> 
-</body>
+<script>
+        document.getElementById('registerForm').addEventListener('submit', function(event) {
+          event.preventDefault();
+    
+          // Get user data from the form
+          const username = document.getElementById('username').value;
+          const password = document.getElementById('password').value;
+    
+          // Save the user data in local storage
+          const userData = { username, password };
+          localStorage.setItem('user', JSON.stringify(userData));
+    
+          alert('User registered successfully!');
+        });
+      </script>
 </html>

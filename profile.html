@@ -3,96 +3,58 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>User Profile</title>
-  <style>
-    .profile-card {
-      max-width: 400px;
-      margin: auto;
-      padding: 20px;
-      border: 1px solid #ddd;
-      border-radius: 8px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    }
-    .profile-card h2, .job-title, .location, .bio, .skills-list, .social-links {
-      margin-bottom: 15px;
-    }
-    .skills-list li {
-      display: inline-block;
-      background-color: #f0f0f0;
-      border-radius: 4px;
-      padding: 5px 10px;
-      margin: 3px;
-    }
-    .social-links a {
-      margin-right: 10px;
-      color: #4CAF50;
-      text-decoration: none;
-    }
-    .social-links a.linkedin { color: #0073b1; } /* LinkedIn color */
-    .social-links a.twitter { color: #1da1f2; } /* Twitter color */
-  </style>
+  <title>Create Profile</title>
 </head>
 <body>
-<header><nav>
-    <li><h1><a href="home.html">Home</a></h1></li>
-</nav></header>
-<div class="profile-card" id="profileCard">
-  <h2 id="username"></h2>
-  <p class="job-title" id="jobTitle"></p>
-  <p class="location" id="location"></p>
-  <p class="bio" id="bio"></p>
+  <h2>Create Your Profile</h2>
 
-  <h3>Skills</h3>
-  <ul class="skills-list" id="skillsList"></ul>
+  <form id="profileForm">
+    <label for="username">Username:</label>
+    <input type="text" id="username" required><br>
 
-  <div class="social-links" id="socialLinks"></div>
-</div>
+    <label for="jobTitle">Job Title:</label>
+    <input type="text" id="jobTitle" required><br>
 
-<script>
-  // Sample user input data
-  const userInput = {
-    username: prompt("Enter username:"),
-    jobTitle: prompt("Enter job title:"),
-    location: prompt("Enter location:"),
-    bio: prompt("Enter bio:"),
-    skills: prompt("Enter skills (comma-separated):").split(",").map(skill => skill.trim()),
-    socialLinks: {
-      linkedin: prompt("Enter LinkedIn URL (optional):"),
-      twitter: prompt("Enter Twitter URL (optional):")
+    <label for="location">Location:</label>
+    <input type="text" id="location" required><br>
+
+    <label for="bio">Bio:</label>
+    <textarea id="bio" required></textarea><br>
+
+    <label for="skills">Skills (comma-separated):</label>
+    <input type="text" id="skills" required><br>
+
+    <label for="linkedin">LinkedIn URL (optional):</label>
+    <input type="url" id="linkedin"><br>
+
+    <label for="twitter">Twitter URL (optional):</label>
+    <input type="url" id="twitter"><br>
+
+    <button type="button" onclick="saveUserProfile()">Save Profile</button>
+  </form>
+
+  <script>
+    function saveUserProfile() {
+      // Collect user input data
+      const userProfile = {
+        username: document.getElementById('username').value,
+        jobTitle: document.getElementById('jobTitle').value,
+        location: document.getElementById('location').value,
+        bio: document.getElementById('bio').value,
+        skills: document.getElementById('skills').value.split(',').map(skill => skill.trim()),
+        socialLinks: {
+          linkedin: document.getElementById('linkedin').value,
+          twitter: document.getElementById('twitter').value
+        }
+      };
+
+      // Save profile data to local storage
+      localStorage.setItem('userProfile', JSON.stringify(userProfile));
+
+      // Show an alert to confirm profile save and redirect to home page
+      alert('Profile saved! Redirecting to home page...');
+      window.location.href = 'home.html';
     }
-  };
-
-  // Populate profile card with user input data
-  document.getElementById("username").textContent = userInput.username;
-  document.getElementById("jobTitle").textContent = userInput.jobTitle;
-  document.getElementById("location").textContent = userInput.location;
-  document.getElementById("bio").textContent = userInput.bio;
-
-  // Populate skills list
-  const skillsList = document.getElementById("skillsList");
-  userInput.skills.forEach(skill => {
-    const skillItem = document.createElement("li");
-    skillItem.textContent = skill;
-    skillsList.appendChild(skillItem);
-  });
-
-  // Populate social links
-  const socialLinksDiv = document.getElementById("socialLinks");
-  if (userInput.socialLinks.linkedin) {
-    const linkedinLink = document.createElement("a");
-    linkedinLink.href = userInput.socialLinks.linkedin;
-    linkedinLink.textContent = "LinkedIn";
-    linkedinLink.className = "linkedin";
-    linkedinLink.target = "_blank";
-    socialLinksDiv.appendChild(linkedinLink);
-  }
-  if (userInput.socialLinks.twitter) {
-    const twitterLink = document.createElement("a");
-    twitterLink.href = userInput.socialLinks.twitter;
-    twitterLink.textContent = "Twitter";
-    twitterLink.className = "twitter";
-    twitterLink.target = "_blank";
-    socialLinksDiv.appendChild(twitterLink);
-  }
-</script>
+  </script>
+</body>
 </html>

@@ -1,70 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Alumni-Student Platform - Register</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register</title>
 </head>
 <body>
-    <div class="container">
-        <h2>Register</h2>
-        <form id="registerForm">
-            <label for="username">Username:</label>
-            <input type="text" id="username" name="username" required>
+  <h2>Register</h2>
+  <form id="registerForm">
+    <input type="text" id="username" placeholder="Username" required><br>
+    <input type="password" id="password" placeholder="Password" required><br>
 
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" required>
+    <!-- Checkboxes for user type -->
+    <label>
+      <input type="radio" name="userType" id="student" value="student" required>
+      Student
+    </label>
+    <label>
+      <input type="radio" name="userType" id="alumni" value="alumni" required>
+      Alumni
+    </label><br>
 
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="password" required>
+    <button type="submit">Register</button>
+  </form>
 
-            <label for="is_student">Are you a student?</label>
-            <input type="checkbox" id="is_student" name="is_student">
+  <script>
+    document.getElementById('registerForm').addEventListener('submit', function(event) {
+      event.preventDefault();
 
-            <label for="is_alumni">Are you an alumni?</label>
-            <input type="checkbox" id="is_alumni" name="is_alumni">
+      // Get user data from the form
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
+      const userType = document.querySelector('input[name="userType"]:checked').value;
 
-            <button type="submit">Register</button>
-        </form>
-    </div>
+      // Save the user data in local storage
+      const userData = { username, password, userType };
+      localStorage.setItem('user', JSON.stringify(userData));
 
-    <script>
-        document.getElementById("registerForm").addEventListener("submit", function(event) {
-            event.preventDefault(); // Prevent the default form submission
+      alert('User registered successfully!');
 
-            const isStudent = document.getElementById("is_student").checked;
-            const isAlumni = document.getElementById("is_alumni").checked;
-
-            // Check if the user selected only one option
-            if (isStudent && isAlumni) {
-                alert("Please select only one role: either Student or Alumni.");
-                return;
-            } else if (isStudent) {
-                // Redirect to home.html if student is selected
-                window.location.href = "home.html";
-            } else if (isAlumni) {
-                // Redirect to profile.html if alumni is selected
-                window.location.href = "profile.html";
-            } else {
-                alert("Please select either Student or Alumni.");
-            }
-        });
-    </script>
-    <script>
-        document.getElementById('registerForm').addEventListener('submit', function(event) {
-          event.preventDefault();
-    
-          // Get user data from the form
-          const username = document.getElementById('username').value;
-          const password = document.getElementById('password').value;
-    
-          // Save the user data in local storage
-          const userData = { username, password };
-          localStorage.setItem('user', JSON.stringify(userData));
-    
-          alert('User registered successfully!');
-        });
-      </script>
+      // Redirect based on user type
+      if (userType === 'student') {
+        window.location.href = 'home.html';
+      } else if (userType === 'alumni') {
+        window.location.href = 'profile.html';
+      }
+    });
+  </script>
 </body>
 </html>

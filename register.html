@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <h2>Register</h2>
+    <form id="registerForm">
+        <input type="text" id="username" placeholder="Username" required><br>
+        <input type="password" id="password" placeholder="Password" required><br>
+
+        <!-- Checkboxes for user type -->
+        <label>
+      <input type="radio" name="userType" id="student" value="student" required>
+      Student
+    </label>
+        <label>
+      <input type="radio" name="userType" id="alumni" value="alumni" required>
+      Alumni
+    </label><br>
+
+        <button type="submit">Register</button>
+    </form>
+
+    <script>
+        document.getElementById('registerForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            // Get user data from the form
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const userType = document.querySelector('input[name="userType"]:checked').value;
+
+            // Save the user data in local storage
+            const userData = {
+                username,
+                password,
+                userType
+            };
+            localStorage.setItem('user', JSON.stringify(userData));
+
+            alert('User registered successfully!');
+
+            // Redirect based on user type
+            if (userType === 'student') {
+                window.location.href = 'home.html';
+            } else if (userType === 'alumni') {
+                window.location.href = 'profile.html';
+            }
+        });
+    </script>
+</body>
+
+</html>

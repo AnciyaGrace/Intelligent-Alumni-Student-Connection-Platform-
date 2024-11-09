@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Profile</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <h2> Profile</h2>
+    <centre><button onclick="saveUserProfile()">Create Profile</button>
+
+        <script>
+            function saveUserProfile() {
+                const userProfile = {
+                    username: prompt("Enter username:"),
+                    jobTitle: prompt("Enter job title:"),
+                    location: prompt("Enter location:"),
+                    bio: prompt("Enter bio:"),
+                    skills: prompt("Enter skills (comma-separated):").split(",").map(skill => skill.trim()),
+                    socialLinks: {
+                        linkedin: prompt("Enter LinkedIn URL (optional):"),
+                        twitter: prompt("Enter Twitter URL (optional):")
+                    }
+                };
+
+                // Save profile data to local storage
+                localStorage.setItem('userProfile', JSON.stringify(userProfile));
+
+                // Redirect to recommendations.html after saving
+                alert('Profile saved! Redirecting to recommendations page...');
+                // Redirect to recommendations.html
+            }
+        </script>
+    </centre>
+</body>
+
+</html>

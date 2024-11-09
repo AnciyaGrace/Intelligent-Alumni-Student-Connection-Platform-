@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recommendations</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .profile-card {
+            max-width: 400px;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .profile-card h2,
+        .job-title,
+        .location,
+        .bio,
+        .skills-list,
+        .social-links {
+            margin-bottom: 15px;
+        }
+        
+        .skills-list li {
+            display: inline-block;
+            background-color: #f0f0f0;
+            border-radius: 4px;
+            padding: 5px 10px;
+            margin: 3px;
+        }
+        
+        .social-links a {
+            margin-right: 10px;
+            color: #4CAF50;
+            text-decoration: none;
+        }
+        
+        .social-links a.linkedin {
+            color: #0073b1;
+        }
+        
+        .social-links a.twitter {
+            color: #1da1f2;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>Profile Recommendations</h2>
+
+    <div class="profile-card" id="profileCard">
+        <h2 id="username"></h2>
+        <p class="job-title" id="jobTitle"></p>
+        <p class="location" id="location"></p>
+        <p class="bio" id="bio"></p>
+
+        <h3>Skills</h3>
+        <ul class="skills-list" id="skillsList"></ul>
+
+        <div class="social-links" id="socialLinks"></div>
+    </div>
+
+    <script>
+        // Function to load and display profile data from localStorage
+        function loadUserProfile() {
+            // Retrieve profile data from localStorage
+            const userProfile = JSON.parse(localStorage.getItem('userProfile'));
+
+            // Check if the profile data exists
+            if (userProfile) {
+                // Populate HTML elements with profile data
+                document.getElementById("username").textContent = userProfile.username;
+                document.getElementById("jobTitle").textContent = `Job Title: ${userProfile.jobTitle}`;
+                document.getElementById("location").textContent = `Location: ${userProfile.location}`;
+                document.getElementById("bio").textContent = `Bio: ${userProfile.bio}`;
+
+                // Populate skills list
+                const skillsList = document.getElementById("skillsList");
+                skillsList.innerHTML = ""; // Clear existing skills
+                userProfile.skills.forEach(skill => {
+                    const skillItem = document.createElement("li");
+                    skillItem.textContent = skill;
+                    skillsList.appendChild(skillItem);
+                });
+
+                // Populate social links
+                const socialLinksDiv = document.getElementById("socialLinks");
+                socialLinksDiv.innerHTML = ""; // Clear existing links
+                if (userProfile.socialLinks.linkedin) {
+                    const linkedinLink = document.createElement("a");
+                    linkedinLink.href = userProfile.socialLinks.linkedin;
+                    linkedinLink.textContent = "LinkedIn";
+                    linkedinLink.className = "linkedin";
+                    linkedinLink.target = "_blank";
+                    socialLinksDiv.appendChild(linkedinLink);
+                }
+                if (userProfile.socialLinks.twitter) {
+                    const twitterLink = document.createElement("a");
+                    twitterLink.href = userProfile.socialLinks.twitter;
+                    twitterLink.textContent = "Twitter";
+                    twitterLink.className = "twitter";
+                    twitterLink.target = "_blank";
+                    socialLinksDiv.appendChild(twitterLink);
+                }
+            } else {
+                // If no profile data found, display a message
+                document.getElementById("profileCard").innerHTML = "<p>No profile data found. Please create a profile first.</p>";
+            }
+        }
+
+        // Load user profile when the page loads
+        window.onload = loadUserProfile;
+    </script>
+    <nav>
+        <li><a href="home.html">Home</a></li>
+    </nav>
+</body>
+
+</html>

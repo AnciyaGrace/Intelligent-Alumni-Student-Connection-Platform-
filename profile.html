@@ -95,19 +95,4 @@
     socialLinksDiv.appendChild(twitterLink);
   }
 </script>
-<script>
-        document.getElementById('registerForm').addEventListener('submit', function(event) {
-          event.preventDefault();
-    
-          // Get user data from the form
-          const username = document.getElementById('username').value;
-          const password = document.getElementById('password').value;
-    
-          // Save the user data in local storage
-          const userData = { username, password };
-          localStorage.setItem('user', JSON.stringify(userData));
-    
-          alert('User registered successfully!');
-        });
-      </script>
 </html>

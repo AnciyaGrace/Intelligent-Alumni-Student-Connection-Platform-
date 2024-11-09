@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profile Recommendations</title>
+  <style>
+    .profile-item {
+      border: 1px solid #ddd;
+      padding: 15px;
+      margin: 10px;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    .profile-item h3 {
+      margin-top: 0;
+    }
+    .profile-item a {
+      color: #4CAF50;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Recommended Profiles</h1>
+  <div id="profile-list"></div>
+
+  <script>
+    function displayProfile(profile) {
+      const profileList = document.getElementById("profile-list");
+      
+      const profileItem = document.createElement("div");
+      profileItem.className = "profile-item";
+      profileItem.innerHTML = `
+        <h3>${profile.username}</h3>
+        <p>Job Title: ${profile.jobTitle}</p>
+        <p>Skills: ${profile.skills.join(", ")}</p>
+        <p>Location: ${profile.location}</p>
+        <p>Bio: ${profile.bio}</p>
+        <p>LinkedIn: <a href="${profile.socialLinks.linkedin}" target="_blank">${profile.socialLinks.linkedin}</a></p>
+        <p>Twitter: <a href="${profile.socialLinks.twitter}" target="_blank">${profile.socialLinks.twitter}</a></p>
+      `;
+      
+      profileList.appendChild(profileItem);
+    }
+
+   
+
+    // Call the function with the example profile
+    displayProfile(Profile);
+  </script>
+
+</body>
+</html>

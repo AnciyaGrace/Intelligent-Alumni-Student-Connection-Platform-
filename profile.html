@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Profile</title>
+  <style>
+    .profile-card {
+      max-width: 400px;
+      margin: auto;
+      padding: 20px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    .profile-card h2, .job-title, .location, .bio, .skills-list, .social-links {
+      margin-bottom: 15px;
+    }
+    .skills-list li {
+      display: inline-block;
+      background-color: #f0f0f0;
+      border-radius: 4px;
+      padding: 5px 10px;
+      margin: 3px;
+    }
+    .social-links a {
+      margin-right: 10px;
+      color: #4CAF50;
+      text-decoration: none;
+    }
+    .social-links a.linkedin { color: #0073b1; } /* LinkedIn color */
+    .social-links a.twitter { color: #1da1f2; } /* Twitter color */
+  </style>
+</head>
+<body>
+<header><nav>
+    <li><h1><a href="home.html">Home</a></h1></li>
+</nav></header>
+<div class="profile-card" id="profileCard">
+  <h2 id="username"></h2>
+  <p class="job-title" id="jobTitle"></p>
+  <p class="location" id="location"></p>
+  <p class="bio" id="bio"></p>
+
+  <h3>Skills</h3>
+  <ul class="skills-list" id="skillsList"></ul>
+
+  <div class="social-links" id="socialLinks"></div>
+</div>
+
+<script>
+  // Sample user input data
+  const userInput = {
+    username: prompt("Enter username:"),
+    jobTitle: prompt("Enter job title:"),
+    location: prompt("Enter location:"),
+    bio: prompt("Enter bio:"),
+    skills: prompt("Enter skills (comma-separated):").split(",").map(skill => skill.trim()),
+    socialLinks: {
+      linkedin: prompt("Enter LinkedIn URL (optional):"),
+      twitter: prompt("Enter Twitter URL (optional):")
+    }
+  };
+
+  // Populate profile card with user input data
+  document.getElementById("username").textContent = userInput.username;
+  document.getElementById("jobTitle").textContent = userInput.jobTitle;
+  document.getElementById("location").textContent = userInput.location;
+  document.getElementById("bio").textContent = userInput.bio;
+
+  // Populate skills list
+  const skillsList = document.getElementById("skillsList");
+  userInput.skills.forEach(skill => {
+    const skillItem = document.createElement("li");
+    skillItem.textContent = skill;
+    skillsList.appendChild(skillItem);
+  });
+
+  // Populate social links
+  const socialLinksDiv = document.getElementById("socialLinks");
+  if (userInput.socialLinks.linkedin) {
+    const linkedinLink = document.createElement("a");
+    linkedinLink.href = userInput.socialLinks.linkedin;
+    linkedinLink.textContent = "LinkedIn";
+    linkedinLink.className = "linkedin";
+    linkedinLink.target = "_blank";
+    socialLinksDiv.appendChild(linkedinLink);
+  }
+  if (userInput.socialLinks.twitter) {
+    const twitterLink = document.createElement("a");
+    twitterLink.href = userInput.socialLinks.twitter;
+    twitterLink.textContent = "Twitter";
+    twitterLink.className = "twitter";
+    twitterLink.target = "_blank";
+    socialLinksDiv.appendChild(twitterLink);
+  }
+</script>
+<script src= "firebase.js"></script>
+<script>saveProfile(profileData) {
+    db.collection("profiles").add(profileData)
+      .then((docRef) => {
+        console.log("Profile added with ID:", docRef.id);
+        alert("Profile saved successfully!");
+      })
+      .catch((error) => {
+        console.error("Error adding profile:", error);
+      });
+  }
+  // Function to retrieve and display profiles
+function getProfiles() {
+  db.collection("profiles").get()
+    .then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        const profile = doc.data();
+        console.log("Profile:", profile);
+        
+        // Display profiles on the page
+        displayProfile(profile); // You’ll implement this function to add profiles to your HTML
+      });
+    })
+    .catch((error) => {
+      console.error("Error retrieving profiles:", error);
+    });
+}
+
+// Call getProfiles to retrieve profiles when the page loads
+// getProfiles();
+</script> 
+</body>
+</html>

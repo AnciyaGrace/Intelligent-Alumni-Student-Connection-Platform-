@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alumni-Student Connection Platform</title>
+    <style>
+        /* Basic styling for layout */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        header, footer {
+            background-color: #4CAF50;
+            color: white;
+            padding: 1em;
+            text-align: center;
+        }
+        .container {
+            display: flex;
+            flex-direction: row;
+            padding: 2em;
+        }
+        .alumni-list, .chat {
+            flex: 1;
+            margin: 0 1em;
+            background: white;
+            padding: 1em;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .search-bar {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 1em;
+        }
+        .search-bar input {
+            padding: 0.5em;
+            width: 80%;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        .alumni-item, .chat-message {
+            border-bottom: 1px solid #eee;
+            padding: 0.5em 0;
+        }
+        .chat-message {
+            display: flex;
+            justify-content: space-between;
+        }
+        .chat-input {
+            display: flex;
+            margin-top: 1em;
+        }
+        .chat-input input {
+            flex: 1;
+            padding: 0.5em;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        .chat-input button {
+            padding: 0.5em;
+            border: none;
+            background-color: #4CAF50;
+            color: white;
+            border-radius: 5px;
+            margin-left: 0.5em;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Alumni-Student Community</h1>
+</header>
+
+<div class="container">
+    <!-- Alumni List Section -->
+    <div class="alumni-list">
+        <h2>Alumni Profiles</h2>
+        <div class="search-bar">
+            <input type="text" id="search" placeholder="Search Alumni by name, industry, etc.">
+        </div>
+        <div id="alumni-list">
+            <!-- Dynamic list of alumni profiles will go here -->
+        </div>
+    </div>
+
+    <!-- Chat Section -->
+    <div class="chat">
+        <h2>Message</h2>
+        <div id="chat-box">
+            <!-- Chat messages will appear here -->
+        </div>
+        <div class="chat-input">
+            <input type="text" id="message" placeholder="Type a message...">
+            <button onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+</div>
+
+<footer>
+    <p>Alumni-Student Community </p>
+</footer>
+
+<script>
+    // Mock data for alumni profiles
+    const alumni = [
+        
+    ];
+
+    // Display alumni profiles
+    function displayAlumni() {
+        const list = document.getElementById('alumni-list');
+        list.innerHTML = alumni.map(alum => `
+            <div class="alumni-item">
+                <strong>${alum.name}</strong><br>
+                <span>${alum.industry}, ${alum.location}</span>
+            </div>
+        `).join('');
+    }
+
+    // Filter alumni by search
+    document.getElementById('search').addEventListener('input', function() {
+        const query = this.value.toLowerCase();
+        const filteredAlumni = alumni.filter(alum =>
+            alum.name.toLowerCase().includes(query) ||
+            alum.industry.toLowerCase().includes(query) ||
+            alum.location.toLowerCase().includes(query)
+        );
+        const list = document.getElementById('alumni-list');
+        list.innerHTML = filteredAlumni.map(alum => `
+            <div class="alumni-item">
+                <strong>${alum.name}</strong><br>
+                <span>${alum.industry}, ${alum.location}</span>
+            </div>
+        `).join('');
+    });
+
+    // Send message function
+    function sendMessage() {
+        const message = document.getElementById('message').value;
+        if (message.trim()) {
+            const chatBox = document.getElementById('chat-box');
+            chatBox.innerHTML += `
+                <div class="chat-message">
+                    <span>You: ${message}</span>
+                    <span>${new Date().toLocaleTimeString()}</span>
+                </div>
+            `;
+            document.getElementById('message').value = '';
+        }
+    }
+
+    // Initialize alumni list on page load
+    displayAlumni();
+</script>
+<script src= "firebase.js"></script>
+</body>
+</html>

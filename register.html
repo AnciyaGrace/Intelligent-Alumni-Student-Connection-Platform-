@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alumni-Student Platform - Register</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Register</h2>
+        <form id="registerForm">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+
+            <label for="is_student">Are you a student?</label>
+            <input type="checkbox" id="is_student" name="is_student">
+
+            <label for="is_alumni">Are you an alumni?</label>
+            <input type="checkbox" id="is_alumni" name="is_alumni">
+
+            <button type="submit">Register</button>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById("registerForm").addEventListener("submit", function(event) {
+            event.preventDefault(); // Prevent the default form submission
+
+            const isStudent = document.getElementById("is_student").checked;
+            const isAlumni = document.getElementById("is_alumni").checked;
+
+            // Check if the user selected only one option
+            if (isStudent && isAlumni) {
+                alert("Please select only one role: either Student or Alumni.");
+                return;
+            } else if (isStudent) {
+                // Redirect to home.html if student is selected
+                window.location.href = "home.html";
+            } else if (isAlumni) {
+                // Redirect to profile.html if alumni is selected
+                window.location.href = "profile.html";
+            } else {
+                alert("Please select either Student or Alumni.");
+            }
+        });
+    </script>
+    <script src= "firebase.js"></script>
+    <script src= "register.js"></script>
+</body>
+</html>
